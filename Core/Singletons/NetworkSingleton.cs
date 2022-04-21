@@ -62,6 +62,19 @@ namespace Hibzz.Core.Singletons
             // only one instance of type T found in the scene
             return items[0];
         }
+
+        // when the singleton object gets destroyed, we make sure that the
+        // static singleton reference is cleared
+        public override void OnDestroy()
+		{
+            // making sure that this object is the static instance, before just 
+            if (instance == this)
+            {
+                instance = null;
+            }
+
+            base.OnDestroy();
+		}
     }
 }
 #endif
