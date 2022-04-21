@@ -6,9 +6,9 @@
 //
 // License ID:   N/A
 // License:      This script can only be used on projects made by Hibzz Games
-//				 or on projects that have a valid license ID. To request a
-//				 custom license and a license ID, please send an email to
-//				 support@hibzz.games with details about the project.
+//               or on projects that have a valid license ID. To request a
+//               custom license and a license ID, please send an email to
+//               support@hibzz.games with details about the project.
 // 
 //               THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
 //               KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
