@@ -20,6 +20,7 @@
 //               USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using Hibzz.Core.Singletons;
 
@@ -63,6 +64,53 @@ namespace Hibzz.Core.UpdateManager
 				{ 
 					return data.updateDelegate == updateDelegate; 
 				});
+		}
+
+		private void CheckForMatchingAttributes(MethodInfo[] methods, MonoBehaviour mono = null)
+		{
+			foreach (var method in methods)
+			{
+				var attributes = method.GetCustomAttributes(false);
+				foreach(var attribute in attributes)
+				{
+					var updateEveryAttribute = attribute as UpdateEveryAttribute;
+					if(updateEveryAttribute != null)
+					{
+						var updateDelegate = method.CreateDelegate(typeof(UpdateDelegate), mono) as UpdateDelegate;
+						if (updateDelegate != null)
+						{
+							Add(updateDelegate, updateEveryAttribute.Interval, true);
+						}
+						else
+						{
+							Debug.LogError($"'{method.Name}' on '{mono.GetType()}' incompatible with UpdateEvery.\n\n" +
+								$"This feature is only compatible with function that take no parameters and returns void");
+						}
+					}
+				}
+			}
+		}
+
+		// called once at the start of the frame
+		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+		private void Start()
+		{
+			var gameobjects = FindObjectsOfType<GameObject>();
+			foreach(var gameobj in gameobjects)
+			{
+				var monos = gameobj.GetComponents<MonoBehaviour>();
+
+				foreach(var mono in monos)
+				{
+					// look through public methods
+					var methods = mono.GetType().GetMethods();
+					CheckForMatchingAttributes(methods, mono);
+
+					// look through private/protected methods
+					methods = mono.GetType().GetMethods(BindingFlags.NonPublic);
+					CheckForMatchingAttributes(methods, mono);
+				}
+			}
 		}
 
 		// Called once every frame
