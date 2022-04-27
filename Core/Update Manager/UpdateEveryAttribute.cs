@@ -17,25 +17,8 @@
 //               LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 //               ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 //               USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-// Status:       Experimental (NOT READY FOR RELEASE)
-// Known Issues: > Doesn't handle new instances being created and objects
-//                 being destroyed
-//               > Doesn't work when UpdateManager is not added to the scene...
-//                 Can a solution be created to automatically instantiate the
-//                 singleton when the attribute is used in the current scene?
-//               > The search seems unnecessarily expensive and doing it
-//                 automagically on a scene with a large number of gameobjects
-//                 with none using the attribute is pointless, stupid and
-//                 expensive
 
-
-
-
-using System.Collections;
-using System.Collections.Generic;
 using System;
-using UnityEngine;
 
 namespace Hibzz.Core.UpdateManager
 {
